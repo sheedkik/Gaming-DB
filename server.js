@@ -3,9 +3,18 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require("express-session")
+var passport = require('passport');
+
+require('dotenv').config();
+// connect to the database with AFTER the config vars are processed
+require('./config/database');
+require('./config/passport');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const gamesRouter = require("./routes/games")
+
 
 var app = express();
 
@@ -13,14 +22,30 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+
+//MIDDLEWARE
+
+app.use(function (req, res, next) {
+  res.locals.user = req.user;
+  next();
+});
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: true
+}))
+app.use(passport.initialize())
+app.use(passport.session());
 
+//ROUTERS
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use("/games", gamesRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

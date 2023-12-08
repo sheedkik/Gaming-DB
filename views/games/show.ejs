@@ -1,0 +1,15 @@
+<%- include('../partials/header') %>
+
+<section id="show-page">
+  <div>Title: </div>
+  <div><%= game.title %></div>
+  <div><img src="<%= game.image %>" alt="Game Cover" style="width: 450px; height: 540px;"></div>
+  <div>Release Date: </div>
+  <div><%= game.releaseDate %></div>
+  <div>Created By:</div>
+  <div><%= game.creator %></div>
+  <div>Rating: </div>
+  <div><%= game.rating %></div>
+
+  
+<%- include('../partials/footer') %>

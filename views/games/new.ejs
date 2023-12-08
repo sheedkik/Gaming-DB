@@ -1,0 +1,18 @@
+<%- include("../partials/header") %>
+<% if (errorMsg) { %>
+<p class="error"><%= errorMsg %></p>
+<% } %>
+
+<form id="new-form" action="/games" method="POST">
+    <label>Title:</label>
+    <input type="text" name="title">
+    <label>Release Date:</label>
+    <input type="date" name="releaseDate">
+    <label>Created By</label>
+    <input type="text" name="creator">
+    <label>Provide .JPG Link</label>
+    <input type="text" name="image">
+    <input type="submit" value="Add Game">
+  </form>
+
+<%- include("../partials/footer") %>

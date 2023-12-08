@@ -1,9 +1,33 @@
 var express = require('express');
 var router = express.Router();
+const passport = require("passport")
+const User = require('../models/user')
 
-/* GET home page. */
+
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  console.log("session User:", req.user)
+  res.redirect("/games")
+});
+
+router.get('/auth/google', passport.authenticate(
+  'google',
+  {
+    scope: ['profile', 'email'],
+  }
+));
+
+router.get('/oauth2callback', passport.authenticate(
+  'google',
+  {
+    successRedirect: '/games',
+    failureRedirect: '/movies'
+  }
+));
+
+router.get('/logout', function(req, res){
+  req.logout(function() {
+    res.redirect('/games');
+  });
 });
 
 module.exports = router;
