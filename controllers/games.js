@@ -8,8 +8,23 @@ module.exports = {
 }
 
 async function index(req, res) {
-    const games = await Game.find({})
-    res.render("games/index", { title: "All Games", games })
+    try {
+        const games = await Game.find({});
+
+        // Update ratings for each game based on reviews
+        for (const game of games) {
+            if (game.reviews.length > 0) {
+                const totalRating = game.reviews.reduce((sum, review) => sum + review.rating, 0);
+                game.rating = totalRating / game.reviews.length;
+                await game.save(); // Save the game with the updated rating
+            }
+        }
+        const sortGamesRating = games.sort((a, b) => b.rating - a.rating)
+        res.render("games/index", { title: "All Games", games: sortGamesRating });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Internal Server Error");
+    }
 }
 
 async function show(req, res) {
@@ -37,6 +52,7 @@ async function create(req, res) {
         })
     }
     const game = await Game.create(req.body)
+    
     res.redirect(`games/${game._id}`)
    } catch (err) {
     console.log(err)

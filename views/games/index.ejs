@@ -3,6 +3,7 @@
 <table id="list">
   <thead>
     <tr>
+      <th>Rating</th>
       <th>Title</th>
       <th>Release<br>Date</th>
       <th></th>
@@ -11,8 +12,9 @@
   <tbody>
     <% games.forEach(function(g) { %>
       <tr>
+        <td><%= g.rating ? g.rating.toFixed(2) : "N/A" %></td>
         <td><%= g.title %></td>
-        <td><%= g.releaseDate %></td>
+        <td><%= g.releaseDate.toLocaleDateString() %></td>
         <td><a href="/games/<%= g._id %>?sort=title">Info</a></td>
       </tr>
       <% }); %>

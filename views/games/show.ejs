@@ -1,15 +1,66 @@
 <%- include('../partials/header') %>
 
 <section id="show-page">
-  <div>Title: </div>
   <div><%= game.title %></div>
   <div><img src="<%= game.image %>" alt="Game Cover" style="width: 450px; height: 540px;"></div>
   <div>Release Date: </div>
-  <div><%= game.releaseDate %></div>
+  <div><%= game.releaseDate.toLocaleDateString() %></div>
   <div>Created By:</div>
   <div><%= game.creator %></div>
   <div>Rating: </div>
-  <div><%= game.rating %></div>
+  <% if (game.reviews.length) { %>
+    <% let total = 0 %>
+    <% game.reviews.forEach(function(g) { %>
+        <% total += g.rating %>
+    <% }) %>
+    <% game.rating = (total / game.reviews.length).toFixed(1)  %>
+    <div><%= game.rating %></div>
+    <% } else { %>
+        <div>No Ratings Yet</div>
+        <% } %>
 
+  <br><br><h2>Reviews</h2>
+<form id="add-review-form" method="POST"
+  action="/games/<%= game._id %>/reviews">
+  <label>Review:</label>
+  <textarea name="content"></textarea>
+  <label>Rating:</label>
+  <select name="rating">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10" selected>10</option>
+  </select>
+  <input type="submit" value="Add Review">
+</form>
+
+<% if (game.reviews.length) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Review</th>
+          <th>Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% game.reviews.forEach(function(g) { %>
+          <tr>
+            <td><%= g.createdAt.toLocaleDateString() %></td>
+            <td><%= g.content %></td>
+            <td><%= g.rating %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <h5>No Reviews Yet</h5>
+  <% } %>
   
 <%- include('../partials/footer') %>

@@ -1,8 +1,23 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
+const reviewSchema = new Schema ({
+    content: {
+        type: String,
+        required: true
+    },
+    rating: {
+        type: Number,
+        min: 1,
+        max: 10,
+        default: 10
+    }
+}, {
+    timestamps: true
+})
+
 const gameSchema = new Schema ({
-    // reviews: [reviewSchema],
+    reviews: [reviewSchema],
     image: {
         type: String,
         required: true
@@ -19,11 +34,17 @@ const gameSchema = new Schema ({
     creator: {
         type: String,
         required: true,
-    },
-    rating: {
-        type: String,
-        enum: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
     }
+})
+
+gameSchema.pre("save", function(next) {
+    if (this.reviews.length === 0) {
+        this.rating = null
+    } else {
+        const totalRating = this.reviews.reduce((sum, review) => sum + review.rating, 0)
+        this.rating = totalRating / this.reviews.length
+    }
+    next()
 })
 
 module.exports = mongoose.model("Game", gameSchema)
