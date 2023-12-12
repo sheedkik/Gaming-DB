@@ -11,12 +11,11 @@ async function index(req, res) {
     try {
         const games = await Game.find({});
 
-        // Update ratings for each game based on reviews
         for (const game of games) {
             if (game.reviews.length > 0) {
                 const totalRating = game.reviews.reduce((sum, review) => sum + review.rating, 0);
                 game.rating = totalRating / game.reviews.length;
-                await game.save(); // Save the game with the updated rating
+                await game.save();
             }
         }
         const sortGamesRating = games.sort((a, b) => b.rating - a.rating)
@@ -29,7 +28,6 @@ async function index(req, res) {
 
 async function show(req, res) {
     const game = await Game.findById(req.params.id)
-    console.log(game)
     res.render("games/show", { title: "Game Details" , game })
 }
 

@@ -12,10 +12,10 @@
 <nav>
     <!-- <img src="/images/camera.svg"> -->
     <a href="/games" <%- title === 'All Games' ? 'class="active"' : '' %>>ALL GAMES</a>
-    <a href="/games/new" <%- title === 'Add Game' ? 'class="active"' : '' %>>ADD GAME</a>
     <% if (user) { %>
+        <a href="/games/new" <%- title === 'Add Game' ? 'class="active"' : '' %>>ADD GAME</a>
       <a href="/logout">LOG OUT</a>
     <% } else { %>
-      <a href="/auth/google" class="login">LOG IN&nbsp;<img src="https://i.imgur.com/FHjYyi0.png"></a>
+      <a href="/auth/google" class="login" id="login-nav">LOG IN&nbsp;<img id="login-image" src="https://i.imgur.com/FHjYyi0.png"></a>
     <% } %>
   </nav>

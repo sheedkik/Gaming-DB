@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require("express-session")
 var passport = require('passport');
+var methodOverride = require("method-override")
 
 require('dotenv').config();
 // connect to the database with AFTER the config vars are processed
@@ -26,15 +27,12 @@ app.set('view engine', 'ejs');
 
 //MIDDLEWARE
 
-app.use(function (req, res, next) {
-  res.locals.user = req.user;
-  next();
-});
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride("_method"))
 app.use(session({
   secret: process.env.SECRET,
   resave: false,
@@ -43,11 +41,16 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session());
 
+app.use(function (req, res, next) {
+  res.locals.user = req.user;
+  next();
+});
+
 //ROUTERS
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use("/games", gamesRouter)
-app.use("/", reviewsRouter)
+app.use("/reviews", reviewsRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

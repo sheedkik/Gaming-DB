@@ -1,24 +1,276 @@
+* {
+  box-sizing: border-box;
+  font-family: Helvetica;
+  color: #333333;
+}
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #FFEF9F;
+  margin: 0;
+  height: 25vh;
+  display: grid;
+  grid-template-rows: 50px 1fr;
+  grid-template-areas: 
+    "nav"
+    "main"
 }
 
-a {
-  color: #00B7FF;
+body > nav {
+  grid-area: nav;
+  background-color: #9AA0A8;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 0 30px;
 }
 
-.login {
+nav > a > img {
+  width: 30px;
+  height: 20px;
+  object-fit: contain;
+  margin-right: auto;
+  margin-left: 20px;
+}
+
+body > main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #E8ECEB;
+  padding: 20px;
+  overflow-y: scroll;
+}
+
+body > main h1{
+  margin-bottom: 5px;
+}
+
+nav > a {
+  margin: 0 20px;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+nav > a:hover:not(.active) {
+  color: white;
+  background-color: #424748;
+}
+
+nav > a.active {
+  color: white;
+  cursor: default;
+}
+
+#new-form {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(2, minmax(auto, 22rem));
+  justify-content: center;
+}
+
+#new-form *,
+#add-review-form * {
+  font-size: 20px;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+#new-form label {
+  color: #12355B;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+#add-review-form label {
+  font-size: 25px;
+}
+
+#add-game-button {
+  display: flex;
+  justify-content: center;
+}
+
+#new-form input[type="submit"] {
+  grid-column: span 2;
+  width: 12rem;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 25px;
+  color: #12355B;
+}
+
+table {
+  font-size: 20px;
+  width: 100%;
+}
+
+table thead th {
+  padding: 5px;
+  border-bottom: 2px solid #424748;
+  font-size: 30px;
+  color: black;
+  font-weight:600
+
+}
+
+table td {
+  padding: 5px;
+  text-align: center;
+  font-size: 25px;
+  color: #12355B;
+  text-decoration: underline;
+}
+
+#list td:nth-child(2), #list td:nth-child(3){
+  min-width: 10px;
+}
+
+#list a {
+  border-radius: 4px;
+  background-color: #B8C0C2;
+  padding: 4px;
+  text-decoration: underline;
+  font-size: 18px;
+  display: inline-block;
+  width: 100%
+}
+
+#list a:hover {
+  background-color: white;
+}
+
+#show-page {
+  display: flex;
+  grid-gap: .5rem;
+  flex-direction: column;
+  align-items: center;
+}
+
+#show-page div:nth-child(even) {
+  font-weight: bold;
+}
+
+#add-review-form {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 1rem;
+  margin-bottom: 2rem;
+  width: 60%;
+}
+
+#add-review-form input[type="submit"] {
+  width: 10rem;
+  grid-column: 2 / 3;
+}
+
+hr {
+  color: #424748
+}
+
+#badge-container {
+  display: flex;
+  flex-wrap: wrap;
+  /* padding: 1rem; */
+  width: 80%;
+  border: 2px solid #B8C0C2;
+  border-radius: .5rem;
+  margin: .5rem 0 2rem;
+}
+
+.badge {
+  background-color: #B8C0C2;
+  padding: .5rem;
+  margin: .5rem;
+  border-radius: .3rem;
+  font-size: .8rem;
+  text-align: center;
+}
+
+#show-page ul {
+  margin: 0 0 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+#show-page li {
+  font-weight: bold;
+}
+.error {
+  display: flex;
+  justify-content: center;
+  color: rgb(180, 3, 3);
+  font-weight: bold;
+  font-size: 30px;
+}
+
+
+h1 {
+  width: 100%;
+  height: 3rem;
+  text-align: center;
+  font-size: 50px;
+  color: #12355B;
+  text-transform: uppercase;
+
+}
+
+
+.review-user {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 34px;
 }
 
-.login img {
-  height: 30px;
+.review-user img {
+  border-radius: 50%;
+  height: 40px;
 }
 
-.error {
+#login-nav {
+  margin-top: -5px;
+}
+
+.game-title {
+  font-size: 55px;
+  color: #12355B;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.game-date {
+  font-size: 23px;
+  text-decoration: underline;
+}
+
+.game-creator {
+  font-size: 23px;
+  text-decoration: underline;
+}
+
+.game-rating {
+  font-size: 23px;
+  text-decoration: underline;
+}
+
+.game-details {
+  color: blue;
+}
+
+#rating {
+  font-size: 30px;
+}
+
+#delete-button {
   color: red;
-  font-weight: bold;
+  font-weight: 600;
+  background-color: silver;
+  padding: 4px;
+  margin: -100px;
+  border-color: darkslategray;
+}
+
+.reviews-content {
+  text-decoration: none;
 }

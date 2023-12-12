@@ -1,27 +1,27 @@
 <%- include('../partials/header') %>
 
 <section id="show-page">
-  <div><%= game.title %></div>
-  <div><img src="<%= game.image %>" alt="Game Cover" style="width: 450px; height: 540px;"></div>
-  <div>Release Date: </div>
-  <div><%= game.releaseDate.toLocaleDateString() %></div>
-  <div>Created By:</div>
-  <div><%= game.creator %></div>
-  <div>Rating: </div>
+  <div class="game-title"><%= game.title %></div>
+  <div ><img src="<%= game.image %>" alt="Game Cover" style="width: 350px; height: 440px;"></div>
+  <div class="game-date">Release Date: </div>
+  <div class="game-details"><%= game.releaseDate.toLocaleDateString() %></div>
+  <div class="game-creator">Created By:</div>
+  <div class="game-details"><%= game.creator %></div>
+  <div class="game-rating">Rating: </div>
   <% if (game.reviews.length) { %>
     <% let total = 0 %>
     <% game.reviews.forEach(function(g) { %>
         <% total += g.rating %>
     <% }) %>
     <% game.rating = (total / game.reviews.length).toFixed(1)  %>
-    <div><%= game.rating %></div>
+    <div class="game-details" id="rating"><%= game.rating %></div>
     <% } else { %>
         <div>No Ratings Yet</div>
         <% } %>
 
   <br><br><h2>Reviews</h2>
-<form id="add-review-form" method="POST"
-  action="/games/<%= game._id %>/reviews">
+<form class="col2" id="add-review-form" method="POST"
+  action="/reviews/games/<%= game._id %>">
   <label>Review:</label>
   <textarea name="content"></textarea>
   <label>Rating:</label>
@@ -41,9 +41,10 @@
 </form>
 
 <% if (game.reviews.length) { %>
-    <table>
+    <table class="col2">
       <thead>
         <tr>
+          <th>User</th>
           <th>Date</th>
           <th>Review</th>
           <th>Rating</th>
@@ -52,9 +53,17 @@
       <tbody>
         <% game.reviews.forEach(function(g) { %>
           <tr>
-            <td><%= g.createdAt.toLocaleDateString() %></td>
-            <td><%= g.content %></td>
-            <td><%= g.rating %></td>
+            <td class="review-user"><img alt="avatar" src="<%= g.userAvatar %>" referrerpolicy="no-referrer"><%= g.userName %></td>
+            <td class="reviews-content"><%= g.createdAt.toLocaleDateString() %></td>
+            <td class="reviews-content"><%= g.content %></td>
+            <td class="reviews-content"><%= g.rating %></td>
+            <td>
+                <% if (user?._id.equals(g.user)) { %>
+                  <form action="/reviews/games/<%= g._id %>?_method=DELETE" method="POST">
+                    <button id="delete-button" type="submit">X</button>
+                  </form>
+                <% } %>
+              </td>
           </tr>
         <% }); %>
       </tbody>
