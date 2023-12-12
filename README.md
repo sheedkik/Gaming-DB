@@ -5,13 +5,13 @@ I wanted to create a one stop shop for all things videogames. Currently the webs
 Heres a quick Preview of my Videogames website!
 
 Homepage
-![alt text](website1.jpg)
+![alt text](/public/images/website1.jpg)
 
 Video Game Details
-![alt text](website2.jpg)
+![alt text](/public/images/website2.jpg)
 
 Video Game Reviews
-![alt text](website3.jpg)
+![alt text](/public/images/website3.jpg)
 
 ##  Technologies Used: 
 
